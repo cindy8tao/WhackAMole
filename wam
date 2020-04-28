@@ -65,12 +65,16 @@ public class WhackAMole {
 		score = score + 10;				// Score +10
 		attemptsLeft--;					// Attempts -1	
 		molesLeft--; 					// Moles -1
+		moleGrid[x][y] = 'W';
 		System.out.println(molesLeft + " moles lefted");
+		System.out.println("You have " + attemptsLeft + "attempts left");
+		System.out.println("SCORE: " + score);
 	    }
 	    else {						// If the user x and y does not hit in the grid
 		System.out.println("Awww, you missed, please try again");
 		attemptsLeft--;					// Attempts -1
 		System.out.println("You have " + attemptsLeft + "attempts left");
+		System.out.println("SCORE: " + score);
 	    }
 	    return true;
 	}
@@ -83,11 +87,14 @@ public class WhackAMole {
     void printGridtoUser() {
 	for(int i = 0; i< moleGrid.length;i++) {		// Read all the x location in the array
 	    for(int j = 0; j<moleGrid.length; j++) {		// Read all the y location in the array
-		if (moleGrid[i][j]=='M') {			// If already whacked, print "W"
-		    System.out.println("W ");
+		if (moleGrid[i][j]=='W') {			// If already whacked, print "W"
+		    System.out.println("W");
+		}
+		else if (moleGrid[i][j]=='M') {			// Show "*" for all the rest
+		    System.out.println("*");
 		}
 		else {
-		    System.out.print(moleGrid[i][j] + " ");	// Otherwise, print blank
+		    System.out.print(moleGrid[i][j]);	
 		}
 	    }
 	}
@@ -97,15 +104,28 @@ public class WhackAMole {
 
     /* Print the grid completely, Every spot with mole -> "M"*/ 
     void printGrid() {
-	for(int i = 0; i< moleGrid[0].length;i++) {		        // For all value in molesGrid x (0 to length)
-	    for(int j = 0; j < moleGrid[0].length; j++) {		// For all value in molesGrid y	(0 to length) 		
-		System.out.println(moleGrid[i][j] + " ");
-		System.out.println();	
+	for(int i = 0; i< moleGrid.length;i++) {		
+	    for(int j = 0; j < moleGrid.length; j++) {				
+		System.out.print(moleGrid[i][j]);		// Print all the spots with moles
 	    }
+	    System.out.println(" ");
 	}
+
+    }
+ // ----------------------------------------CALL----------------------------------------//
+
+    void score() {						// Call out the final score
+	System.out.print("FINAL SCORE:  " + score);
+    }
+    void molesLeft() {						// Call out the moles and the moles lefted
+	int moles = 10 - molesLeft;
+	System.out.print("MOLES HIT: "+ moles);
+	System.out.println(" ");
+	System.out.print("MOLES LEFT: "+ molesLeft);
     }
 
-
+ // ----------------------------------------MAIN----------------------------------------//
+    
     /* Main function of the game, ask user for input*/
 
     public static void main(String[] args) {
@@ -127,10 +147,14 @@ public class WhackAMole {
 	    int x = player.nextInt();
 	    System.out.println("Please enter a coordinate y to WHACK A MOLE:   ");
 	    int y = player.nextInt();
-	    //System.out.println("(" + x + "," + y +")");
+	    System.out.println("(" + x + "," + y +")");
 	    if (x==-1 && y==-1) {
 		System.out.println("GAME OVER");
-		wam.printGrid();
+		wam.score();
+		System.out.println(" ");
+		wam.molesLeft();
+		System.out.println(" ");
+		wam.printGridtoUser();
 		return;
 	    }
 	    else {
@@ -138,10 +162,8 @@ public class WhackAMole {
 	    }
 
 	}
-	
 	System.out.println("GAME OVER");
-	wam.printGridtoUser();
-	
+	wam.printGrid();
 
     }
 }

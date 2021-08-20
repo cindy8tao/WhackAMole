@@ -1,4 +1,4 @@
-package wam;
+package whackAMole;
 
 import java.util.Scanner; // Java built in scanner (later use for user to input data)
 
